@@ -13,7 +13,7 @@ module Cobbler
       # Breed                          : redhat
       # [...]
       distro_chk = Mixlib::ShellOut.new("cobbler distro report --name='#{distro}'")
-      distro_chk.run_command 
+      distro_chk.run_command
       Chef::Application.fatal!("Cobbler failed with:\nStderr: #{distro_chk.stderr.chomp}\nStdout: #{distro_chk.stdout.chomp}\nReturn code: #{distro_chk.exitstatus}") if distro_chk.error?
       raw_distro_info = distro_chk.stdout
       raw_field_line = raw_distro_info.each_line.select { |l| l if l.chomp.start_with?(field) }

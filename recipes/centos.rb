@@ -22,7 +22,7 @@ cobbler_image 'centos-5.10-netinstall' do
   os_version 'rhel5'
 end
 
-%w{centos-6.5-netinstall centos-5.10-netinstall}.each do |dist|
+%w(centos-6.5-netinstall centos-5.10-netinstall).each do |dist|
   cobbler_profile "#{profile}-#{dist}" do
     kickstart "#{profile}.ks"
     distro "#{dist}-x86_64"

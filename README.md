@@ -92,6 +92,20 @@ Include `cobblerd` in your node's `run_list`:
 }
 ```
 
+## Testing
+
+### Test Kitchen
+
+Install [Test Kitchen](https://github.com/test-kitchen/test-kitchen/wiki/Getting-Started)
+
+### ChefSpec
+
+To run [ChefSpec](https://docs.chef.io/chefspec.html) run
+````
+bundle install
+rspec
+````
+
 ## Maintainers
 
 Author:: [Bloomberg Compute Architecture Group][2] (<compute@bloomberg.net>)

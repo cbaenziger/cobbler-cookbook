@@ -4,7 +4,6 @@
 #
 # Copyright (C) 2014 Bloomberg Finance L.P.
 #
-
 class Chef
   class Resource
     class CobblerImage < Resource
@@ -71,7 +70,13 @@ class Chef
 
             cobbler_set_kernel(new_distro) if new_resource.kernel
             cobbler_set_initrd(new_distro) if new_resource.initrd
+            # define cobbler sync for actions which need it
+            bash 'cobbler-sync' do
+              command 'cobbler sync'
+              action :nothing
+            end
           end
+
         end
       end
 
@@ -102,6 +107,17 @@ class Chef
           options %w(loop ro)
           action :mount
           only_if { ::File.exist? new_resource.target }
+        end
+
+        log 'provide cobbler import command' do
+          level :debug
+          message <<-MSG
+            cobbler import --name='#{new_resource.name}' \
+             --path=#{::File.join(Chef::Config[:file_cache_path], 'mnt')} \
+             --breed=#{new_resource.os_breed} \
+             --arch=#{new_resource.os_arch} \
+             --os-version=#{new_resource.os_version}
+          MSG
         end
 
         bash 'cobbler-import' do
@@ -154,6 +170,17 @@ class Chef
           notifies :run, 'bash[cobbler-distro-update-kernel]', :immediately
         end
 
+        log 'provide kernel cobbler distro edit command' do
+          level :debug
+          message <<-MSG
+            cobbler distro edit --name='#{new_resource.name}-#{new_resource.os_arch}' \
+             --kernel='#{kernel_path}' \
+             --breed=#{new_resource.os_breed} \
+             --arch=#{new_resource.os_arch} \
+             --os-version=#{new_resource.os_version}
+          MSG
+        end
+
         bash 'cobbler-distro-update-kernel' do
           code <<-CODE
             cobbler distro edit --name='#{new_resource.name}-#{new_resource.os_arch}' \
@@ -195,6 +222,17 @@ class Chef
             end
           end
           notifies :run, 'bash[cobbler-distro-update-initrd]', :immediately
+        end
+
+        log 'provide initrd cobbler distro edit command' do
+          level :debug
+          message <<-MSG
+            cobbler distro edit --name='#{new_resource.name}-#{new_resource.os_arch}' \
+             --initrd='#{initrd_path}' \
+             --breed=#{new_resource.os_breed} \
+             --arch=#{new_resource.os_arch} \
+             --os-version=#{new_resource.os_version}
+          MSG
         end
 
         bash 'cobbler-distro-update-initrd' do

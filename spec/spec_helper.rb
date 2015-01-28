@@ -1,7 +1,6 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 require 'chefspec/cacher'
-require 'chefspec/server'
 require 'coveralls'
 
 Coveralls.wear!
@@ -28,17 +27,23 @@ RSpec.configure do |config|
     mocks.syntax = :expect
     mocks.verify_partial_doubles = true
   end
+
 end
+
+berks = Berkshelf::Berksfile.from_file('Berksfile').install()
 
 at_exit { ChefSpec::Coverage.report! }
 
 RSpec.shared_context 'recipe tests', type: :recipe do
-  let(:chef_run) { ChefSpec::Runner.new(node_attributes).converge(described_recipe) }
 
+  let(:chef_run) { ChefSpec::SoloRunner.new(node_attributes).converge(described_recipe) }
+ 
   def node_attributes
     {
       platform: 'ubuntu',
-      version: '12.04'
+      version: '12.04',
+      file_cache_path: '/var/chef/cache',
+      step_into: ['cobbler_image', 'cobbler_profile']
     }
   end
 end

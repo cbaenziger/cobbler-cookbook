@@ -52,6 +52,12 @@ class Chef
           notifying_block do
             cobbler_profile_delete
           end
+
+          # define cobbler sync for actions which need it
+          bash 'cobbler-sync' do
+            command 'cobbler sync'
+            action :nothing
+          end
         end
       end
 
@@ -59,6 +65,12 @@ class Chef
         converge_by("importing #{new_resource.name} into cobbler") do
           notifying_block do
             cobbler_profile_add
+
+            # define cobbler sync for actions which need it
+            bash 'cobbler-sync' do
+              command 'cobbler sync'
+              action :nothing
+            end
           end
         end
       end

@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'chef'
 require 'chefspec'
 require 'chefspec/berkshelf'
 require 'chefspec/cacher'
@@ -42,6 +44,7 @@ RSpec.shared_context 'recipe tests', type: :recipe do
     {
       platform: 'ubuntu',
       version: '12.04',
+      log_level: :debug,
       file_cache_path: '/var/chef/cache',
       step_into: ['cobbler_image', 'cobbler_profile']
     }

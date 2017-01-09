@@ -48,7 +48,6 @@ class Chef
     # Verify the resource name before importing image
     def action_import
       converge_by("importing #{new_resource.name} into cobbler") do
-        notifying_block do
 
           # Check if any restricted words are present
           bare_words = node[:cobbler][:distro][:reserved_words][:bare_words]
@@ -117,7 +116,6 @@ class Chef
           cobbler_set_kernel(force_run = new_distro) if new_resource.kernel
           cobbler_set_initrd(force_run = new_distro) if new_resource.initrd
         end
-      end
     end
 
     def cobbler_set_kernel(force_run = false)

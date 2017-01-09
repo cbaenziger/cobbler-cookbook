@@ -52,17 +52,13 @@ class Chef
 
     def action_delete
       converge_by("deleting #{new_resource.name} into cobbler") do
-        notifying_block do
           cobbler_profile_delete
-        end
       end
     end
 
     def action_import
       converge_by("importing #{new_resource.name} into cobbler") do
-        notifying_block do
           cobbler_profile_add
-        end
       end
     end
 

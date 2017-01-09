@@ -4,11 +4,17 @@
 #
 # Copyright (C) 2014 Bloomberg Finance L.P.
 #
+begin
+  require 'poise'
+rescue LoadError
+end
+
 class Chef
   class Resource::CobblerProfile < Resource
     include Poise
     include Cobbler::Parse
 
+    provides(:cobbler_profile) if respond_to?(:provides)
     actions(:import)
     actions(:delete)
 

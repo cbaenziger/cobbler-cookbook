@@ -13,7 +13,6 @@ end
 class Chef
   class Resource::CobblerImage < Resource
     include Poise
-    provides(:cobbler_image) if respond_to?(:provides)
     actions(:import)
 
     # WARNING: some options are not idempotent:
@@ -44,6 +43,7 @@ class Chef
 
   class Provider::CobblerImage < Provider
     include Poise
+    provides(:cobbler_image) if respond_to?(:provides)
 
     # Verify the resource name before importing image
     def action_import

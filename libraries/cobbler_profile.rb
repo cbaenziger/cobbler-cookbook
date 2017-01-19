@@ -14,7 +14,6 @@ class Chef
     include Poise
     include Cobbler::Parse
 
-    provides(:cobbler_profile) if respond_to?(:provides)
     actions(:import)
     actions(:delete)
 
@@ -49,6 +48,7 @@ class Chef
 
   class Provider::CobblerProfile < Provider
     include Poise
+    provides(:cobbler_profile) if respond_to?(:provides)
 
     def action_delete
       converge_by("deleting #{new_resource.name} into cobbler") do

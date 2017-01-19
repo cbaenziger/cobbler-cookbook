@@ -16,5 +16,7 @@ supports 'ubuntu', '= 12.04'
 supports 'ubuntu', '= 14.04'
 
 depends 'poise'
-recommends 'apt'
-recommends 'yum-epel'
+depends 'apt'
+depends 'yum-epel'
+
+chef_version '>= 11' if respond_to?(:chef_version)

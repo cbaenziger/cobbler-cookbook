@@ -1,6 +1,6 @@
 name             'cobblerd'
-maintainer       'John Bellone'
-maintainer_email 'jbellone@bloomberg.net'
+maintainer       'Compute Architecture'
+maintainer_email 'compute@bloomberg.net'
 license          'Apache 2.0'
 description      'Installs/Configures cobblerd'
 long_description 'Installs/Configures cobblerd'

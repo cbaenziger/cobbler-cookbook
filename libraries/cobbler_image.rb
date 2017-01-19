@@ -50,9 +50,9 @@ class Chef
       converge_by("importing #{new_resource.name} into cobbler") do
 
           # Check if any restricted words are present
-          bare_words = node[:cobbler][:distro][:reserved_words][:bare_words]
-          separators = node[:cobbler][:distro][:reserved_words][:separators]
-          arch = node[:cobbler][:distro][:reserved_words][:arch]
+          bare_words = node[:cobblerd][:distro][:reserved_words][:bare_words]
+          separators = node[:cobblerd][:distro][:reserved_words][:separators]
+          arch = node[:cobblerd][:distro][:reserved_words][:arch]
           strings_caught = bare_words.select{ |word| word if new_resource.name.include?(word) }
           strings_caught = strings_caught + separators.collect{ |sep| arch.collect{ |arch| sep+arch if new_resource.name.include?(sep+arch) } }.flatten.select{|s| s}
           if strings_caught.length > 0 then
@@ -177,7 +177,7 @@ class Chef
       # Arguments - force_run -- boolean as to if this should run without checking checksums
       Chef::Resource::RemoteFile.send(:include, Cobbler::Parse)
 
-      initrd_path = "#{node[:cobbler][:resource_storage]}/#{new_resource.name}-#{new_resource.os_arch}/#{::File.basename(new_resource.initrd)}"
+      initrd_path = "#{node[:cobblerd][:resource_storage]}/#{new_resource.name}-#{new_resource.os_arch}/#{::File.basename(new_resource.initrd)}"
 
       directory ::File.dirname(initrd_path) do
         action :create

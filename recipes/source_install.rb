@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: cobblerd
-# Recipe:: cobbler_source_install
+# Recipe:: source_install
 #
-# Copyright (C) 2017 Bloomberg Finance L.P.
+# Copyright (C) 2018 Bloomberg Finance L.P.
 #
 
 cobbler_target_filepath = node['cobbler']['target']['filepath']

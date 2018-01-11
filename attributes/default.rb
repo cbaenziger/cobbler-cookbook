@@ -47,6 +47,9 @@ cobbler_target_filename = 'cobbler.rpm' if node['platform_family'] == "rhel"
 cobbler_target_filename = 'cobbler.deb' if node['platform_family'] == "debian"
 default['cobbler']['target']['filepath'] = ::File.join(node['cobbler']['bin_dir'], cobbler_target_filename)
 
+# Provide a default cobbler service name
+default['cobbler']['service']['name'] = 'cobbler'
+
 # $ echo 'cobbler' | mkpasswd -S LQTvGQ11AIG0k -s -m sha-512
 default[:cobblerd][:ks][:root_password] = '$6$LQTvGQ11AIG0k$TOSqMnXrQ9Y.3AP6KwRnMitmRaIeteoDKlxVbJgxXB07bK8HdzthHps8gjbIn0iYbTI1BpOVIUtqks6Ed06E7/'
 default[:cobblerd][:ks][:user_password] = '$6$LQTvGQ11AIG0k$TOSqMnXrQ9Y.3AP6KwRnMitmRaIeteoDKlxVbJgxXB07bK8HdzthHps8gjbIn0iYbTI1BpOVIUtqks6Ed06E7/'

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: cobblerd
-# Recipe:: cobbler_source_build
+# Recipe:: source_build
 #
-# Copyright (C) 2017 Bloomberg Finance L.P.
+# Copyright (C) 2018 Bloomberg Finance L.P.
 #
 
 build_user = node['cobbler']['source']['build_user']
